@@ -4,6 +4,5 @@ Several features implemented:
 - Pausing/Resuming the game
 - Manual editing of the grid via clicking
 - Changing the speed of animation on-the-go (does not affect FPS)
-- ...more to go
 
 Link to Github repository: https://github.com/asakhhh/game-of-life-java

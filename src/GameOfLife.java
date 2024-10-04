@@ -10,14 +10,24 @@ public class GameOfLife extends JFrame {
     private int frameCount = 0;
     private double generationsPerSec, nextGenerationFrame;
 
+    /**
+     * Getter of a boolean field.
+     * @return <code>true</code> if the game is running, <code>false</code> otherwise
+     */
     public boolean isRunning() {
         return running;
     }
 
+    /**
+     * Pauses the game.
+     */
     public void pause() {
         running = false;
     }
 
+    /**
+     * Resumes the game.
+     */
     public void resume() {
         running = true;
     }
@@ -36,6 +46,9 @@ public class GameOfLife extends JFrame {
         });
     }
 
+    /**
+     * Initiates an instance of the game and sets default values.
+     */
     public GameOfLife() {
         super("Game of Life");
 
@@ -57,6 +70,9 @@ public class GameOfLife extends JFrame {
         timer.start();
     }
 
+    /**
+     * Adds the labels and buttons to draw. Also implements the buttons' mechanics.
+     */
     public void addContents() {
         JLabel text = new JLabel("Welcome to a simple simulation of Conway's Game of Life!");
         JLabel text2 = new JLabel("The grid size is 50x50. " +
@@ -170,10 +186,17 @@ public class GameOfLife extends JFrame {
         }
     }
 
+    /**
+     * Method called from <code>DrawingPanel</code> to draw the grid.
+     * @param g the <code>Graphics</code> context in which to paint
+     */
     public void drawGrid(Graphics g) {
         this.grid.draw(g);
     }
 
+    /**
+     *  Increments frame count. If needed, counts next generation (based on the speed of animation).
+     */
     public void evolve() {
         incrementFrameCount();
         if (frameCount == (int)nextGenerationFrame) {
@@ -187,25 +210,47 @@ public class GameOfLife extends JFrame {
         }
     }
 
+    /**
+     * Increments frame count (keeps it between 1 and 1000 to not cause overflow later on).
+     */
     public void incrementFrameCount() {
         frameCount = frameCount % 1000 + 1;
     }
 
+    /**
+     * Getter for <code>frameCount</code>.
+     * @return <code>frameCount</code>
+     */
     public int getFrameCount() {
         return frameCount;
     }
 
+    /**
+     * Getter for <code>generationsPerSec</code>.
+     * @return <code>generationsPerSec</code>
+     */
     public double getGenerationsPerSec() {
         return generationsPerSec;
     }
 
+    /**
+     * Getter for <code>nextGenerationFrame</code>.
+     * @return <code>nextGenerationFrame</code>
+     */
     public double getNextGenerationFrame() {
         return nextGenerationFrame;
     }
 
-    public void updateCell(int mouseY, int mouseX) {
+    /**
+     * Updates the cell on mouse click if the game is not running.
+     * @param mouseDownY y-coordinate of the mouse press
+     * @param mouseDownX x-coordinate of the mouse press
+     * @param mouseUpY y-coordinate of the mouse release
+     * @param mouseUpX x-coordinate of the mouse release
+     */
+    public void updateCell(int mouseDownY, int mouseDownX, int mouseUpY, int mouseUpX) {
         if (!running) {
-            grid.updateMouse(mouseY, mouseX);
+            grid.updateMouse(mouseDownY, mouseDownX, mouseUpY, mouseUpX);
         }
     }
 }
