@@ -23,13 +23,6 @@ public class GameOfLife extends JFrame {
     }
 
     public static void main(String[] args) {
-
-        System.out.println("This is a simulation of Conway's Game of Life.");
-        System.out.println("The grid size is 50 x 50.");
-        System.out.println("You can start by using the button.");
-        System.out.println("While the game is not running, you can edit the grid manually by clicking the cells.");
-
-
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -212,7 +205,7 @@ public class GameOfLife extends JFrame {
 
     public void updateCell(int mouseY, int mouseX) {
         if (!running) {
-            grid.update(mouseY, mouseX);
+            grid.updateMouse(mouseY, mouseX);
         }
     }
 }

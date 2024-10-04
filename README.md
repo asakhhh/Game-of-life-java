@@ -1,5 +1,5 @@
-**This is a simple simulation of Conway's "Game of Life"**<br/><br/>
-Implemented using Java Swing.<br/>
+**This is a simple simulation of Conway's "Game of Life"!**<br/><br/>
+Implemented using Java Swing for CSCI 235: Programming Languages.<br/>
 Several features implemented:
 - Pausing/Resuming the game
 - Manual editing of the grid via clicking

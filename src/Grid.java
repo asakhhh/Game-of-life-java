@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -91,7 +92,7 @@ public class Grid {
         }
     }
 
-    public void update(int mouseY, int mouseX) {
+    public void updateMouse(int mouseY, int mouseX) {
         mouseY -= drawY;
         mouseX -= drawX;
         if (mouseY < 0 || mouseX < 0 || mouseY % (cellSize + 1) == 0 || mouseX % (cellSize + 1) == 0) {
@@ -99,10 +100,63 @@ public class Grid {
         }
         int cellY = mouseY / (cellSize + 1);
         int cellX = mouseX / (cellSize + 1);
-        grid.get(cellY).set(cellX, !isAlive(cellY, cellX));
+        update(cellY, cellX);
+    }
+
+    public void update(int y, int x) {
+        grid.get(y).set(x, !isAlive(y, x));
     }
 
     public void fillGosper() {
-
+        clear();
+        update(1, 24);
+        update(1, 25);
+        update(2, 24);
+        update(2, 25);
+        update(2, 26);
+        update(3, 10);
+        update(3, 26);
+        update(3, 27);
+        update(3, 29);
+        update(4, 8);
+        update(4, 10);
+        update(4, 15);
+        update(4, 16);
+        update(4, 17);
+        update(4, 26);
+        update(4, 29);
+        update(4, 35);
+        update(4, 36);
+        update(5, 7);
+        update(5, 9);
+        update(5, 26);
+        update(5, 27);
+        update(5, 29);
+        update(5, 35);
+        update(5, 36);
+        update(6, 2);
+        update(6, 6);
+        update(6, 9);
+        update(6, 17);
+        update(6, 20);
+        update(6, 21);
+        update(6, 24);
+        update(6, 25);
+        update(6, 26);
+        update(7, 1);
+        update(7, 2);
+        update(7, 7);
+        update(7, 9);
+        update(7, 17);
+        update(7, 21);
+        update(7, 24);
+        update(7, 25);
+        update(8, 8);
+        update(8, 10);
+        update(8, 17);
+        update(8, 20);
+        update(9, 10);
+        update(9, 19);
+        update(9, 20);
     }
 }
