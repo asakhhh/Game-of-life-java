@@ -1,17 +1,14 @@
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class GameOfLife extends JFrame {
     private DrawingPanel drawingPanel;
     private boolean running = false;
     private Grid grid;
     private int frameCount = 0;
-    private double generationPerSec, nextGenerationFrame;
+    private double generationsPerSec, nextGenerationFrame;
 
     public boolean isRunning() {
         return running;
@@ -51,8 +48,8 @@ public class GameOfLife extends JFrame {
 
         grid = new Grid();
         this.frameCount = 0;
-        this.generationPerSec = 10;
-        this.nextGenerationFrame = 50.0 / this.generationPerSec;
+        this.generationsPerSec = 3;
+        this.nextGenerationFrame = 50.0 / this.generationsPerSec;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -144,6 +141,40 @@ public class GameOfLife extends JFrame {
                 pauseButton.setText("Start");
             }
         });
+
+        JLabel switchGenPerSecText = new JLabel("Choose animation speed:");
+        switchGenPerSecText.setFont(new Font("Serif", Font.PLAIN, 18));
+        switchGenPerSecText.setBounds(160, 370, 300, 40);
+        this.add(switchGenPerSecText);
+        JLabel switchGenPerSecText2 = new JLabel("( generations per second )");
+        switchGenPerSecText2.setFont(new Font("Serif", Font.PLAIN, 18));
+        switchGenPerSecText2.setBounds(160, 390, 300, 40);
+        this.add(switchGenPerSecText2);
+
+        JButton[] options = new JButton[5]; // 0.5, 1, 3, 10, 30
+        Double[] val = {0.5, 1.0, 3.0, 10.0, 30.0};
+        for (int i = 0; i < 5; i++) {
+            JButton button = new JButton(val[i].toString());
+            button.setBackground(Color.cyan);
+            if (i == 2) {
+                button.setBackground(Color.blue);
+            }
+            button.setBounds(39 + 90 * i, 430, 80, 40);
+            double newGenerationsPerSec = val[i];
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    frameCount = 0;
+                    generationsPerSec = newGenerationsPerSec;
+                    nextGenerationFrame = 50.0 / generationsPerSec;
+                    for (int i = 0; i < 5; i++) {
+                        options[i].setBackground(Color.cyan);
+                    }
+                    button.setBackground(Color.blue);
+                }
+            });
+            this.add(button);
+            options[i] = button;
+        }
     }
 
     public void drawGrid(Graphics g) {
@@ -153,7 +184,7 @@ public class GameOfLife extends JFrame {
     public void evolve() {
         incrementFrameCount();
         if (frameCount == (int)nextGenerationFrame) {
-            nextGenerationFrame = nextGenerationFrame + 50.0 / generationPerSec;
+            nextGenerationFrame = nextGenerationFrame + 50.0 / generationsPerSec;
             if (nextGenerationFrame > 1001) {
                 nextGenerationFrame -= 1000;
             }
@@ -171,8 +202,8 @@ public class GameOfLife extends JFrame {
         return frameCount;
     }
 
-    public double getGenerationPerSec() {
-        return generationPerSec;
+    public double getGenerationsPerSec() {
+        return generationsPerSec;
     }
 
     public double getNextGenerationFrame() {
