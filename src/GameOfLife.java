@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class GameOfLife extends JFrame {
     private DrawingPanel drawingPanel;
-    private boolean running = false;
+    private boolean running = false, toroid = false;
     private Grid grid;
     private int frameCount = 0;
     private double generationsPerSec, nextGenerationFrame;
@@ -16,6 +16,15 @@ public class GameOfLife extends JFrame {
      */
     public boolean isRunning() {
         return running;
+    }
+
+    /**
+     * Getter of a boolean field.
+     * @return <code>true</code> if the grid is toroid (corresponding edges are "stitched"),
+     * <code>false</code> otherwise
+     */
+    public boolean isToroid() {
+        return toroid;
     }
 
     /**
@@ -73,7 +82,7 @@ public class GameOfLife extends JFrame {
     /**
      * Adds the labels and buttons to draw. Also implements the buttons' mechanics.
      */
-    public void addContents() {
+    private void addContents() {
         JLabel text = new JLabel("Welcome to a simple simulation of Conway's Game of Life!");
         JLabel text2 = new JLabel("The grid size is 50x50. " +
                 "While the game is not running, the grid can be edited manually by clicking the cells.");
@@ -151,6 +160,14 @@ public class GameOfLife extends JFrame {
             }
         });
 
+        addGenerationsPerSec();
+        addToroid();
+    }
+
+    /**
+     * Adds the label and buttons for choosing animation speed.
+     */
+    private void addGenerationsPerSec() {
         JLabel switchGenPerSecText = new JLabel("Choose animation speed:");
         switchGenPerSecText.setFont(new Font("Serif", Font.PLAIN, 18));
         switchGenPerSecText.setBounds(160, 370, 300, 40);
@@ -187,6 +204,27 @@ public class GameOfLife extends JFrame {
     }
 
     /**
+     * Adds the label and button for toroid switch.
+     */
+    private void addToroid() {
+        JLabel toroidButtonText = new JLabel("Make the edges \"stitched\"");
+        toroidButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        toroidButtonText.setBounds(120, 500, 300, 40);
+        this.add(toroidButtonText);
+
+        JButton toroidButton = new JButton("Toroidal");
+        toroidButton.setBackground(Color.white);
+        toroidButton.setBounds(365, 500, 115, 40);
+        toroidButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                toroid = !isToroid();
+                toroidButton.setBackground(isToroid() ? Color.green : Color.white);
+            }
+        });
+        this.add(toroidButton);
+    }
+
+    /**
      * Method called from <code>DrawingPanel</code> to draw the grid.
      * @param g the <code>Graphics</code> context in which to paint
      */
@@ -205,7 +243,7 @@ public class GameOfLife extends JFrame {
                 nextGenerationFrame -= 1000;
             }
             if (running) {
-                grid.evolve();
+                grid.evolve(isToroid());
             }
         }
     }

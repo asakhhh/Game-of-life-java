@@ -64,12 +64,18 @@ public class Grid {
      * @param x x-coordinate of the cell
      * @return the number of live cells around a cell, excluding the cell itself
      */
-    private int countAdjacentAlive(int y, int x) {
+    private int countAdjacentAlive(int y, int x, boolean isToroid) {
         int result = 0;
         for (int ny = y - 1; ny <= y + 1; ny++) {
             for (int nx = x - 1; nx <= x + 1; nx++) {
-                if (ny >= 0 && ny < size && nx >= 0 && nx < size && isAlive(ny, nx)) {
-                    result++;
+                if (!isToroid) {
+                    if (ny >= 0 && ny < size && nx >= 0 && nx < size && isAlive(ny, nx)) {
+                        result++;
+                    }
+                } else {
+                    if (isAlive((ny + size) % size, (nx + size) % size)) {
+                        result++;
+                    }
                 }
             }
         }
@@ -97,12 +103,12 @@ public class Grid {
      *     <li>Dead cell becomes alive if it has exactly 3 neighbours, remains dead otherwise.</li>
      * </ul>
      */
-    public void evolve() {
+    public void evolve(boolean isToroid) {
         ArrayList<ArrayList<Boolean>> newGrid = new ArrayList<>();
         for (int y = 0; y < size; y++) {
             ArrayList<Boolean> newRow = new ArrayList<>();
             for (int x = 0; x < size; x++) {
-                int adjAlive = countAdjacentAlive(y, x);
+                int adjAlive = countAdjacentAlive(y, x, isToroid);
                 if (isAlive(y, x) && (adjAlive < 2 || adjAlive > 3)) {
                     newRow.add(false);
                 } else if (!isAlive(y, x) && adjAlive == 3) {
