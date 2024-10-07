@@ -68,7 +68,7 @@ public class GameOfLife extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(300, 100, screen.width - 600, screen.height - 150);
+        setBounds(0, 0, screen.width, screen.height);
         drawingPanel = new DrawingPanel(this);
         drawingPanel.setLayout(null);
         setContentPane(drawingPanel);
@@ -83,18 +83,22 @@ public class GameOfLife extends JFrame {
      * Adds the labels and buttons to draw. Also implements the buttons' mechanics.
      */
     private void addContents() {
-        JLabel text = new JLabel("Welcome to a simple simulation of Conway's Game of Life!");
+        JLabel text = new JLabel("Welcome to Conway's Game of Life!");
         JLabel text2 = new JLabel("The grid size is 50x50. " +
-                "While the game is not running, the grid can be edited manually by clicking the cells.");
-        text.setFont(new Font("Serif", Font.PLAIN, 18));
+                "While the game is not running,");
+        JLabel text3 = new JLabel("the grid can be edited manually by clicking the cells.");
+        text.setFont(new Font("Arial", Font.PLAIN, 18));
         text.setBounds(30, 20, 2000, 30);
         this.add(text);
-        text2.setFont(new Font("Serif", Font.PLAIN, 18));
+        text2.setFont(new Font("Arial", Font.PLAIN, 18));
         text2.setBounds(30, 50, 2000, 30);
         this.add(text2);
+        text3.setFont(new Font("Arial", Font.PLAIN, 18));
+        text3.setBounds(30, 80, 2000, 30);
+        this.add(text3);
 
         JLabel pauseButtonText = new JLabel("Start/Pause/Resume the game");
-        pauseButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        pauseButtonText.setFont(new Font("Arial", Font.PLAIN, 17));
         pauseButtonText.setBounds(90, 150, 300, 40);
         this.add(pauseButtonText);
 
@@ -110,7 +114,7 @@ public class GameOfLife extends JFrame {
         });
 
         JLabel clearButtonText = new JLabel("Clear the grid");
-        clearButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        clearButtonText.setFont(new Font("Arial", Font.PLAIN, 17));
         clearButtonText.setBounds(220, 200, 300, 40);
         this.add(clearButtonText);
 
@@ -127,7 +131,7 @@ public class GameOfLife extends JFrame {
         });
 
         JLabel randomButtonText = new JLabel("Random fill");
-        randomButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        randomButtonText.setFont(new Font("Arial", Font.PLAIN, 17));
         randomButtonText.setBounds(240, 250, 300, 40);
         this.add(randomButtonText);
 
@@ -144,7 +148,7 @@ public class GameOfLife extends JFrame {
         });
 
         JLabel gosperButtonText = new JLabel("Gosper's glider gun");
-        gosperButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        gosperButtonText.setFont(new Font("Arial", Font.PLAIN, 17));
         gosperButtonText.setBounds(175, 300, 300, 40);
         this.add(gosperButtonText);
 
@@ -162,6 +166,7 @@ public class GameOfLife extends JFrame {
 
         addGenerationsPerSec();
         addToroid();
+        addExit();
     }
 
     /**
@@ -169,11 +174,11 @@ public class GameOfLife extends JFrame {
      */
     private void addGenerationsPerSec() {
         JLabel switchGenPerSecText = new JLabel("Choose animation speed:");
-        switchGenPerSecText.setFont(new Font("Serif", Font.PLAIN, 18));
+        switchGenPerSecText.setFont(new Font("Arial", Font.PLAIN, 17));
         switchGenPerSecText.setBounds(160, 370, 300, 40);
         this.add(switchGenPerSecText);
         JLabel switchGenPerSecText2 = new JLabel("( generations per second )");
-        switchGenPerSecText2.setFont(new Font("Serif", Font.PLAIN, 18));
+        switchGenPerSecText2.setFont(new Font("Arial", Font.PLAIN, 17));
         switchGenPerSecText2.setBounds(160, 390, 300, 40);
         this.add(switchGenPerSecText2);
 
@@ -208,7 +213,7 @@ public class GameOfLife extends JFrame {
      */
     private void addToroid() {
         JLabel toroidButtonText = new JLabel("Make the edges \"stitched\"");
-        toroidButtonText.setFont(new Font("Serif", Font.PLAIN, 18));
+        toroidButtonText.setFont(new Font("Arial", Font.PLAIN, 17));
         toroidButtonText.setBounds(120, 500, 300, 40);
         this.add(toroidButtonText);
 
@@ -222,6 +227,21 @@ public class GameOfLife extends JFrame {
             }
         });
         this.add(toroidButton);
+    }
+
+    /**
+     * Adds the exit button.
+     */
+    private void addExit() {
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBackground(Color.red);
+        exitButton.setBounds(365, 700, 115, 40);
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        this.add(exitButton);
     }
 
     /**
