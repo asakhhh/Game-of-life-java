@@ -238,6 +238,7 @@ public class GameOfLife extends JFrame {
         exitButton.setBounds(365, 700, 115, 40);
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                running = false;
                 System.exit(0);
             }
         });
