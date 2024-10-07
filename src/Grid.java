@@ -18,7 +18,7 @@ public class Grid {
         size = 50;
         cellSize = 14;
         drawX = 500;
-        drawY = 120;
+        drawY = 30;
         clear(); // is used to initialize empty grid
     }
 
